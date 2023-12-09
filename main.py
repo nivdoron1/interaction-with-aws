@@ -1,10 +1,12 @@
 import boto3
 import json
+import os
 
 s3 = boto3.client('s3')
+bucket_name = os.environ['BUCKET_NAME']
 
 
-def lambda_handler(event, context, bucket_name):
+def lambda_handler(event, context):
     try:
         response = s3.list_objects_v2(Bucket=bucket_name)
         if 'Contents' in response:

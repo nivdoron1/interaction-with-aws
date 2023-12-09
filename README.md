@@ -59,8 +59,6 @@ To locate the existing symlink and installation directory, use the following ste
 
 ---
 
-This README file provides a straightforward guide on how to download, install, and update the AWS CLI. Would you like this content saved as a text file?
-
 ## connect your administrator account
    ```bash
       # enter your  AWS Access Key ID ,AWS Secret Access Key ,Default region name , Default output format
@@ -69,8 +67,8 @@ This README file provides a straightforward guide on how to download, install, a
    ```
 ## create IAM user and give him the S3 permissions
    ```bash
-      #write your desired username
-      export user_name="<YourUserName>"
+      # if you are creating IAM user keep it True else change to false
+      export create_user= true
    ```
    ```bash
       #write your desired username
@@ -78,7 +76,7 @@ This README file provides a straightforward guide on how to download, install, a
    ```
    ```bash
       #write your desired username
-      export policy_name="S3ReadWritePolicy"
+      export role_name="S3ReadWritePolicy"
    ```
    ```bash
       #write your desired username
@@ -86,22 +84,6 @@ This README file provides a straightforward guide on how to download, install, a
    ```
    ```bash
       #write your desired username
-      export policy_document=$(cat <<-END
-      {
-       "Version": "2012-10-17",
-       "Statement": [
-           {
-               "Effect": "Allow",
-               "Action": [
-                   "s3:GetObject",
-                   "s3:PutObject",
-                   "s3:DeleteObject"
-               ],
-               "Resource": "arn:aws:s3:::$bucket_name/*"
-           }
-       ]
-   }
-   END
-   )
+      export policy_document= "LambdaS3ReadOnlyPolicy.json"
    ```
    
