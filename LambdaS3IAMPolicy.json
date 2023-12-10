@@ -3,9 +3,6 @@
     "Statement": [
         {
             "Effect": "Allow",
-            "Principal": {
-                "Service": "lambda.amazonaws.com"
-            },
             "Action": [
                 "s3:GetObject",
                 "s3:ListBucket"
@@ -14,6 +11,15 @@
                 "arn:aws:s3:::your-bucket-name",
                 "arn:aws:s3:::your-bucket-name/*"
             ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "arn:aws:logs:*:*:*"
         }
     ]
 }

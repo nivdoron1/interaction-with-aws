@@ -76,7 +76,7 @@ To locate the existing symlink and installation directory, use the following ste
    ```
    ```bash
       #write your desired username
-      export role_name="S3ReadWritePolicy"
+      export role_name="<YourRoleName"
    ```
    ```bash
       #write your desired username
@@ -84,6 +84,6 @@ To locate the existing symlink and installation directory, use the following ste
    ```
    ```bash
       #write your desired username
-      export policy_document= "LambdaS3ReadOnlyPolicy.json"
+      export function_name= "<YourBucketName>"
    ```
    
