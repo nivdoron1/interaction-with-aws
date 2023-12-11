@@ -1,2 +1,4 @@
 boto3
-awscli
+pytest
+'moto[ec2,s3,all]'
+uuid

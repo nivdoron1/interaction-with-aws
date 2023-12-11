@@ -1,13 +1,16 @@
+import os
+import uuid
+
 import boto3
 import json
-import os
 
 s3 = boto3.client('s3')
-bucket_name = "bucket-niv"
 
 
-def lambda_handler(event, context):
+def get_s3_object_list(event, context):
+    bucket_name = os.environ['BUCKET_NAME']
     try:
+        s3.head_bucket(Bucket=bucket_name)
         response = s3.list_objects_v2(Bucket=bucket_name)
         if 'Contents' in response:
             objects = [item['Key'] for item in response['Contents']]

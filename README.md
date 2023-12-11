@@ -1,10 +1,15 @@
-# interaction-with-aws
-## install requirments
-    pip install -r requirments.txt
+# Manage AWS
+## Install Requirements
+First, install the necessary dependencies for the AWS CLI and utilities like `jq` and `zip` using the following commands:
+
+```bash
+# Install requirements
+sudo apt-get update
+sudo apt-get install -y jq zip
+```
 
 ## Download and Install the AWS CLI using Linux
-
-To download and install the AWS CLI, follow these steps:
+The AWS CLI is a tool to manage AWS services. Install it on a Linux machine with these steps:
 
 ```bash
 # Download the AWS CLI
@@ -17,73 +22,58 @@ unzip awscliv2.zip
 sudo ./aws/install
 ```
 
-After installation, you can verify it by running `aws --version`. This should display the installed version of the AWS CLI.
+After installation, verify it by running `aws --version`.
 
 ## Update the AWS CLI
-
-To update your current installation of the AWS CLI, use the following command. Ensure to replace the paths with your existing symlink and installation directory.
+To update your AWS CLI installation, replace the paths with your existing symlink and installation directory:
 
 ```bash
 # Update the AWS CLI
 sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
 ```
 
-To locate the existing symlink and installation directory, use the following steps:
+Follow these steps to locate the symlink and installation directory:
 
-1. **Locate the Symlink:**
+1. Locate the Symlink: Use `which aws` to find the path.
+2. Find the Installation Directory: Use `ls -l /usr/local/bin/aws` to find where the symlink points.
+3. Confirm the Installation: Run `aws --version` after updating.
 
-   Use the `which` command to find your symlink. This gives you the path to use with the `--bin-dir` parameter.
+## Connect Your Account
+Configure the AWS CLI with your AWS credentials and default settings:
 
-   ```bash
-   $ which aws
-   /usr/local/bin/aws
-   ```
+```bash
+aws configure
+```
 
-2. **Find the Installation Directory:**
+## Config and Run
+Set environment variables for your AWS resources:
 
-   Use the `ls` command to find the directory that your symlink points to. This gives you the path to use with the `--install-dir` parameter.
+```bash
+export role_name="<YourRoleName"
+export bucket_name="<YourBucketName>"
+export function_name= "<YourFunctionName>"
+export policy_name= "<YourPolicyName>"
+```
+```bash
+bash aws_config.sh
+```
 
-   ```bash
-   $ ls -l /usr/local/bin/aws
-   lrwxrwxrwx 1 ec2-user ec2-user 49 Oct 22 09:49 /usr/local/bin/aws -> /usr/local/aws-cli/v2/current/bin/aws
-   ```
+## Test the Lambda Function
+Test the AWS Lambda function by invoking it with predefined parameters:
 
-3. **Confirm the Installation:**
+```bash
+BUCKET_NAME=your-bucket-name FUNCTION_NAME=your-function-name pytest test.py
+```
 
-   After updating, confirm the installation with the following command:
+## Delete the Configuration and Bucket
+Remove the created AWS configurations and S3 bucket:
 
-   ```bash
-   $ aws --version
-   aws-cli/2.10.0 Python/3.11.2 Linux/4.14.133-113.105.amzn2.x86_64 botocore/2.4.5
-   ```
+```bash
+bash delete.sh
+```
 
----
+## Python and Bash Scripts
+The `get_s3_object_list` Python script defines an AWS Lambda function for listing objects in an S3 bucket. The bash scripts (`aws_config.sh` and `delete.sh`) help in setting up and cleaning up AWS resources.
 
-## connect your administrator account
-   ```bash
-      # enter your  AWS Access Key ID ,AWS Secret Access Key ,Default region name , Default output format
-      # you can change your output format in any command by your choice by adding --output <your_format_type>
-      aws configure
-   ```
-## create IAM user and give him the S3 permissions
-   ```bash
-      # if you are creating IAM user keep it True else change to false
-      export create_user= true
-   ```
-   ```bash
-      #write your desired username
-      export user_name="<YourUserName>"
-   ```
-   ```bash
-      #write your desired username
-      export role_name="<YourRoleName"
-   ```
-   ```bash
-      #write your desired username
-      export bucket_name="<YourBucketName>"
-   ```
-   ```bash
-      #write your desired username
-      export function_name= "<YourBucketName>"
-   ```
-   
+## Functionality of the Setup
+This setup is designed for deploying a Python-based AWS Lambda function to interact with AWS S3. The function, when triggered, lists objects in a specified S3 bucket. This automated, serverless functionality is useful for applications involving data processing or file management in the cloud. The provided scripts facilitate easy configuration, testing, and cleanup of AWS resources.
